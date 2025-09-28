@@ -1,4 +1,4 @@
-/*
+  /*
 DigitalStudioPortfolio.jsx
 Single-file React component (Tailwind + Framer Motion)
 
@@ -222,6 +222,15 @@ function Hero() {
 }
 
 const projects = [
+  // { id: 'devbridge', title: 'DevBridge Frontend', tag: 'For all Codes (all in one platform)', image: 'devbridge' },
+  { 
+    id: 'devbridge', 
+    title: 'DevBridge Frontend', 
+    tag: 'For all Coders (all in one platform)', 
+    image: 'devbridge',
+    link: 'https://insta-university.vercel.app/',
+    customImage: 'src/assets/Gemini_Generated_Image_3f1f683f1f683f1f.png'
+  },
   { id: 'portfolio', title: 'Portfolio Websites', tag: 'For writers, photographers, videographers & models', image: 'portfolio' },
   { id: 'ecom', title: 'E‑Commerce Websites', tag: 'Small shops, dropshippers, and brands', image: 'shop' },
   { id: 'agency', title: 'Business / Agency', tag: 'Agency sites, landing pages, services', image: 'agency' },
@@ -246,18 +255,23 @@ function Showroom() {
 
 function ProjectCard({ project }) {
   return (
-    <motion.a whileHover={{ scale: 1.02 }} className="group block rounded-xl overflow-hidden bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition" href={`#${project.id}`}>
+    <motion.a 
+      whileHover={{ scale: 1.02 }} 
+      className="group block rounded-xl overflow-hidden bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition" 
+      href={project.link || `#${project.id}`} 
+      target={project.link ? "_blank" : "_self"} 
+      rel={project.link ? "noopener noreferrer" : undefined}
+    >
       <div className="relative h-44 sm:h-52 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-900">
         <div className="absolute inset-0 flex items-center justify-center">
-          <OutletPreview type={project.image} />
+          <OutletPreview type={project.image} customImage={project.customImage} />
         </div>
-        {/* Animated overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/6 group-hover:from-black/10 transition"></div>
       </div>
       <div className="p-4">
         <div className="flex items-center justify-between">
           <h3 className="font-semibold">{project.title}</h3>
-          <div className="text-xs text-indigo-600 font-medium">View</div>
+          <div className="text-xs text-indigo-600 font-medium hover:text-red-200 hover:font-bold hover:text-sm transition-all duration-200 ">View</div>
         </div>
         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{project.tag}</p>
       </div>
@@ -265,10 +279,32 @@ function ProjectCard({ project }) {
   )
 }
 
-function OutletPreview({ type = 'portfolio' }) {
+function OutletPreview({ type = 'portfolio', customImage }) {
+  if (customImage) {
+    return (
+      <img 
+        src={customImage} 
+        alt={type} 
+        // className="w-40 h-28 sm:w-48 sm:h-32 object-cover rounded-md transform transition group-hover:scale-105"
+        className="w-full h-full object-cover rounded-t-xl transform transition group-hover:scale-105"
+
+      />
+    )
+  }
   // Simple SVG previews per outlet
   return (
     <div className="w-40 h-28 sm:w-48 sm:h-32 rounded-md overflow-hidden transform transition group-hover:scale-105">
+      {type === 'devbridge' && (
+        <div className="w-full h-full bg-white/60 flex items-center justify-center">
+          <svg width="90" height="60" viewBox="0 0 90 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="90" height="60" rx="6" fill="#EEF2FF" />
+            <rect x="6" y="8" width="78" height="8" rx="2" fill="#C7D2FE" />
+            <rect x="6" y="24" width="56" height="4" rx="2" fill="#E0E7FF" />
+            <circle cx="74" cy="36" r="11" fill="#C7D2FE" />
+          </svg>
+        </div>
+      )}
+
       {type === 'portfolio' && (
         <div className="w-full h-full bg-white/60 flex items-center justify-center">
           <svg width="90" height="60" viewBox="0 0 90 60" fill="none" xmlns="http://www.w3.org/2000/svg">
